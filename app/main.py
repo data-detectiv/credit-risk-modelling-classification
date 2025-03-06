@@ -16,14 +16,14 @@ with row1[1]:
 with row1[2]:
     loan_amount = st.number_input('Loan Amount', min_value=0, value=25600000)
 
-loan_to_income_ratio = loan_amount / income if income > 0 else 0
+loan_to_income = loan_amount / income if income > 0 else 0
 with row2[0]:
     st.text("Loan to Income Ratio")
-    st.text(f"{loan_to_income_ratio:.2f}")
+    st.text(f"{loan_to_income:.2f}")
 with row2[1]:
     loan_tenure_months = st.number_input('Loan Tenure (months)', min_value=0, step=1, value=36)
 with row2[2]:
-    avg_dpd_per_deliquency = st.number_input('Avg DPD)', min_value=0, value=20)
+    avg_dpd_per_delinquency = st.number_input('Avg DPD)', min_value=0, value=20)
 
 with row3[0]:
     delinquency_ratio = st.number_input('Delinquency Ratio', min_value=0, max_value=100, step=1, value=30)
@@ -40,12 +40,10 @@ with row4[2]:
     loan_type = st.selectbox('Loan Type', ['Unsecured', 'Secured'])
 
 if st.button("Calculate Risk"):
-    probability, credit_score, rating = predict(age, income, loan_amount, loan_tenure_months, avg_dpd_per_deliquency, 
+    probability, credit_score, rating = predict(age, income, loan_amount, loan_tenure_months, avg_dpd_per_delinquency, 
                                                 delinquency_ratio, credit_utilization_ratio, 
                                                 num_open_accounts, residence_type, loan_purpose, loan_type)
     
     st.write(f"Default Probability: {probability:.2%}")
     st.write(f"Credit Score: {credit_score}")
     st.write(f"Rating: {rating}")
-
-

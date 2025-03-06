@@ -11,7 +11,7 @@ features = model_data['features']
 cols_to_scale = model_data['cols_to_scale']
 
 def prepare_df(age, income, loan_amount, 
-            loan_tenure_months, avg_dpd_per_deliquency, 
+            loan_tenure_months, avg_dpd_per_delinquency, 
             delinquency_ratio, credit_utilization_ratio, 
             num_open_accounts, residence_type, loan_purpose, loan_type):
     
@@ -20,9 +20,9 @@ def prepare_df(age, income, loan_amount,
         'loan_tenure_months': loan_tenure_months,
         'number_of_open_accounts': num_open_accounts,
         'credit_utilization_ratio': credit_utilization_ratio,
-        'loan_to_income_ratio': loan_amount / income if income > 0 else 0,
+        'loan_to_income': loan_amount / income if income > 0 else 0,
         'delinquency_ratio': delinquency_ratio,
-        'avg_dpd_per_deliquency': avg_dpd_per_deliquency,
+        'avg_dpd_per_delinquency': avg_dpd_per_delinquency,
         'residence_type_Owned': 1 if residence_type == 'Owned' else 0,
         'residence_type_Rented': 1 if residence_type == 'Rented' else 0,
         'loan_purpose_Education': 1 if loan_purpose == 'Education' else 0,
@@ -51,11 +51,11 @@ def prepare_df(age, income, loan_amount,
     return df
   
 def predict(age, income, loan_amount, 
-            loan_tenure_months, avg_dpd_per_deliquency, 
+            loan_tenure_months, avg_dpd_per_delinquency, 
             delinquency_ratio, credit_utilization_ratio, 
             num_open_accounts, residence_type, loan_purpose, loan_type):
     input_df = prepare_df(age, income, loan_amount, 
-            loan_tenure_months, avg_dpd_per_deliquency, 
+            loan_tenure_months, avg_dpd_per_delinquency, 
             delinquency_ratio, credit_utilization_ratio, 
             num_open_accounts, residence_type, loan_purpose, loan_type)
     
@@ -86,7 +86,3 @@ def calculate_credit_score(input_df, base_score=300, scale_length=600):
     rating = get_rating(credit_score[0])
 
     return default_probability.flatten()[0], int(credit_score[0]), rating
-
-
-
-
